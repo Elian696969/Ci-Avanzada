@@ -1,0 +1,31 @@
+name: Java CI with Gradle
+
+on:
+  push:
+    branches: [ "main", "feature/**" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clonar el repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: gradle
+
+      - name: Hacer ejecutable el script de Gradle
+        run: chmod +x gradlew
+
+      - name: Ejecutar pruebas
+        run: ./gradlew test
+
+      - name: Construir
+        run: ./gradlew build
